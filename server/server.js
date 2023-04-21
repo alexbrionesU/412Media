@@ -651,8 +651,9 @@ app.get("/findAlbumPosts", async (req, res) => {
     );
     const aid = albumId.rows[0].album_id;
     const result = await pool.query(
-      `SELECT p.* 
+      `SELECT p.*, u.username 
       FROM photos AS p
+      JOIN Users AS u ON p.user_id = u.user_id
       WHERE p.user_id = $1
       AND p.album_id = $2`,
       [userId, aid]
